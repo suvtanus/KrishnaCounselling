@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Krishna's Wisdom</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #fefae0;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      margin: auto;
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      color: #4b0082;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .chat-box {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding-bottom: 10px;
+    }
+
+    .chat-bubble {
+      margin: 10px 0;
+      padding: 12px;
+      border-radius: 10px;
+      background: #fff;
+      border-left: 5px solid #4b0082;
+      white-space: pre-line;
+    }
+
+    .user { background-color: #e3d8f1; border-left-color: #6a0dad; }
+    .krishna { background-color: #fff; border-left-color: #4b0082; }
+
+    textarea {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      resize: none;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #4b0082;
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #341164;
+    }
+
+    #loading {
+      display: none;
+      text-align: center;
+      padding-top: 10px;
+      font-style: italic;
+    }
+
+    .clear-btn {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .clear-btn button {
+      background-color: #aaa;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      textarea {
+        font-size: 14px;
+      }
+
+      button {
+        font-size: 15px;
+      }
+    }
+  </style>
+  <script>
+    function showLoader() {
+      document.getElementById("loading").style.display = "block";
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>🕉️ Krishna's Wisdom</h1>
+    <form method="POST" onsubmit="showLoader()">
+      <textarea name="question" rows="4" placeholder="Speak, O Arjuna..." required></textarea>
+      <button type="submit">Ask Krishna</button>
+      <div id="loading">⏳ Krishna is guiding you...</div>
+    </form>
+
+    <div class="chat-box">
+      {% for msg in chat_history %}
+        {% if msg.role == "user" %}
+          <div class="chat-bubble user"><strong>You (Arjuna):</strong> {{ msg.content }}</div>
+        {% elif msg.role == "assistant" %}
+          <div class="chat-bubble krishna"><strong>Krishna:</strong> {{ msg.content }}</div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="clear-btn">
+      <form action="/clear" method="get">
+        <button type="submit">🧹 Clear Conversation</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
