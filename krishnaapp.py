@@ -54,7 +54,7 @@ def index():
             chat_history.append({"role": "user", "content": user_input})
             try:
                 api_response = client.chat.completions.create(
-                    model="gpt-4",
+                    model="gpt-3.5-turbo-0125",
                     messages=chat_history,
                     temperature=0.7,
                 )
